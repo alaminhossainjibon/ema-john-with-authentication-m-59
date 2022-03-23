@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { addToDb } from '../../utilities/fakedb'
+import { addToDb, getStoredCard } from '../../utilities/fakedb'
 import Card from '../Card/Card';
 import Product from '../Product/Product';
 import './Shop.css'
@@ -11,16 +11,37 @@ const Shop = () => {
     useEffect(() => {
         fetch('products.json')
             .then(res => res.json())
-            //setProduct add
-            .then(data => setProducts(data))
-    }, [])
+            .then(data => setProducts(data));
+    }, []);
 
+    useEffect(() => {
+        const storedCart = getStoredCard();
+        const savedCart = [];
+        for (const id in storedCart) {
+            const addedProduct = products.find(product => product.id === id);
+            if (addedProduct) {
+                const quantity = storedCart[id];
+                addedProduct.quantity = quantity;
+                savedCart.push(addedProduct);
+            }
+        }
+        setCard(savedCart);
+    }, [products]);
     // card click handle
-    const handleAddToCard = (product) => {
-        // console.log(product);
-        const newCard = [...card, product]
+    const handleAddToCard = (selectedProduct) => {
+        let newCard = [];
+        const exists = card.find(product => product.id === selectedProduct.id);
+        if (!exists) {
+            selectedProduct.quantity = 1;
+            newCard = [...card, selectedProduct];
+        }
+        else {
+            const rest = card.filter(product => product.id !== selectedProduct.id);
+            exists.quantity = exists.quantity + 1;
+            newCard = [...rest, exists];
+        }
         setCard(newCard)
-        addToDb(product.id)
+        addToDb(selectedProduct.id)
     }
     return (
         <div className='shop-container'>
