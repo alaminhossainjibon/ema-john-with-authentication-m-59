@@ -1,7 +1,7 @@
 import React from 'react';
 import './Card.css'
-const Card = ({ card }) => {
-    // console.log(card);
+const Card = (props) => {
+    const { card } = props;
     let total = 0;
     let shipping = 0;
     let quantity = 0;
@@ -20,6 +20,7 @@ const Card = ({ card }) => {
             <p>Total Shipping: ${shipping}</p>
             <p>Tax: %{tax}</p>
             <p>Grand Total: ${grandTotal.toFixed(2)}</p>
+            {props.children}
         </div>
     );
 };
