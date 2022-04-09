@@ -1,0 +1,96 @@
+.form-container {
+    width: 600px;
+    height: 600px;
+    margin: 20px auto;
+    border: 1px solid #95A0A7;
+    box-sizing: border-box;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    box-shadow: 10px 10px 40px rgb(224, 178, 51);
+}
+
+.form-container:hover {
+    box-shadow: 10px 10px 40px #FF9900;
+}
+
+.form-title {
+    font-size: 35px;
+    color: #2A414F;
+    font-weight: 400;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+
+.input-group input {
+    width: 415px;
+    height: 55px;
+    border: 1px solid #95A0A7;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-size: 24px;
+}
+
+.form-submit {
+    width: 415px;
+    height: 55px;
+    background-color: rgb(225, 186, 137);
+    border-radius: 5px;
+    border: none;
+    font-size: 25px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.form-link {
+    color: #FF9900;
+    text-decoration: none;
+}
+
+.border {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 27px 0;
+}
+
+.margin hr {
+    width: 160px;
+    height: 1px;
+    margin-right: 30px;
+    color: #FF9900;
+    background-color: #FF9900;
+}
+
+.or {
+    color: #2A414F;
+    font-size: 15px;
+    font-weight: 600;
+    margin-right: 30px;
+}
+
+.form-google {
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 20px;
+    border: 1px solid #95A0A7;
+    font-size: 25px;
+    font-weight: 400;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+}
+
+.img {
+    width: 45px;
+    margin-right: 10px;
+}
