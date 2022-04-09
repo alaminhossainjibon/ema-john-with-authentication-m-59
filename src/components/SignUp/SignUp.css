@@ -1,0 +1,15 @@
+.form-signup-container {
+    width: 600px;
+    height: 730px;
+    margin: 20px auto;
+    border: 1px solid #95A0A7;
+    box-sizing: border-box;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    box-shadow: 10px 10px 40px rgb(224, 178, 51);
+}
+
+.form-signup-container:hover {
+    box-shadow: 10px 10px 40px #FF9900;
+}
