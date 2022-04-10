@@ -19,10 +19,17 @@
 
 /**
  * firebase hosting steps
- * 1. install command: npm install -g firebase-tools
- * 2. firebase login
- * 3. firebase init
- * 4. npm run build
- * 5. firebase deploy
+ * 1. install command: npm install -g firebase-tools (one time for your computer )
+ * 2. firebase login (one time for your computer )
+ * 3. firebase init (one time for each project)
+ * 4. npm run build (every time you want to deploy)
+ * 5. firebase deploy (every time you want to deploy)
  * 
+ */
+
+
+/**
+ *  code e kono kichu change korle 
+ * 1. npm run build
+ * 2. firebase deploy
  */
