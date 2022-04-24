@@ -1,54 +1,78 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import useProducts from '../../hooks/useProduct';
-import { addToDb, getStoredCard } from '../../utilities/fakedb'
+import useCart from '../../hooks/useCart';
+import { addToDb } from '../../utilities/fakedb'
 import Card from '../Card/Card';
 import Product from '../Product/Product';
 import './Shop.css'
 
 const Shop = () => {
-    const [products, setProducts] = useProducts();
-    const [card, setCard] = useState([])
+    const [card, setCard] = useCart()
+    const [pageCount, setPageCount] = useState(0);
+    const [page, setPage] = useState(0);
+    const [size, setSize] = useState(10);
+    const [products, setProducts] = useState([])
 
     useEffect(() => {
-        const storedCart = getStoredCard();
-        const savedCart = [];
-        for (const id in storedCart) {
-            const addedProduct = products.find(product => product.id === id);
-            if (addedProduct) {
-                const quantity = storedCart[id];
-                addedProduct.quantity = quantity;
-                savedCart.push(addedProduct);
-            }
-        }
-        setCard(savedCart);
-    }, [products]);
+        fetch(`http://localhost:5000/product?page=${page}&size=${size}`)
+            .then(res => res.json())
+            .then(data => setProducts(data))
+    }, [page, size]);
+
+    useEffect(() => {
+        fetch('http://localhost:5000/productCount')
+            .then(res => res.json())
+            .then(data => {
+                const count = data.count;
+                const pages = Math.ceil(count / 10);
+                setPageCount(pages);
+            })
+    }, [])
+
     // card click handle
     const handleAddToCard = (selectedProduct) => {
         let newCard = [];
-        const exists = card.find(product => product.id === selectedProduct.id);
+        const exists = card.find(product => product._id === selectedProduct._id);
         if (!exists) {
             selectedProduct.quantity = 1;
             newCard = [...card, selectedProduct];
         }
         else {
-            const rest = card.filter(product => product.id !== selectedProduct.id);
+            const rest = card.filter(product => product._id !== selectedProduct._id);
             exists.quantity = exists.quantity + 1;
             newCard = [...rest, exists];
         }
         setCard(newCard)
-        addToDb(selectedProduct.id)
+        addToDb(selectedProduct._id)
     }
     return (
         <div className='shop-container'>
             <div className='products-container'>
                 {
                     products.map(product => <Product
-                        key={product.id}
+                        key={product._id}
                         product={product}
                         handleAddToCard={handleAddToCard}
                     ></Product>)
                 }
+
+                <div className='pagination'>
+                    {
+                        [...Array(pageCount).keys()]
+                            .map(number => <button
+                                className={page === number ? 'selected' : ''}
+                                onClick={() => setPage(number)}
+                            >{number + 1}</button>)
+                    }
+                    <select onChange={e => setSize(e.target.value)}>
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>
+
+                </div>
+
             </div>
             <div className='card-container'>
                 <Card card={card}>

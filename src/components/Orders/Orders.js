@@ -1,20 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import useCart from '../../hooks/useCart';
-import useProducts from '../../hooks/useProduct';
 import { removeFromDb } from '../../utilities/fakedb';
 import Card from '../Card/Card';
 import ReviewItem from '../ReviewItem/ReviewItem';
 import './Orders.css'
 
 const Orders = () => {
-    const [products, setProducts] = useProducts();
-    const [card, setCard] = useCart(products)
-
+    const [card, setCard] = useCart()
     const handleRemoveProduct = product => {
-        const rest = card.filter(pd => pd.id !== product.id);
+        const rest = card.filter(pd => pd._id !== product._id);
         setCard(rest);
-        removeFromDb(product.id)
+        removeFromDb(product._id)
     }
 
     return (
@@ -22,7 +19,7 @@ const Orders = () => {
             <div className='review-item-container'>
                 {
                     card.map(product => <ReviewItem
-                        key={product.id}
+                        key={product._id}
                         product={product}
                         handleRemoveProduct={handleRemoveProduct}
                     ></ReviewItem>)
